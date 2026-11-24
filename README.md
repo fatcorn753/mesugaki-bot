@@ -21,6 +21,19 @@ cp config.example.json config.json   # token を書く
 .venv/bin/python main.py
 ```
 
+## ubuntu-server へのデプロイ
+
+スクリプトは `~/artistme/python/deploy-mesugaki-bot.sh`。sudo のパスワードを聞かれる。
+
+```bash
+~/artistme/python/deploy-mesugaki-bot.sh -n       # 送る内容の確認だけ
+~/artistme/python/deploy-mesugaki-bot.sh --setup  # 初回: venv 作成・config.json 転送・systemd 登録
+~/artistme/python/deploy-mesugaki-bot.sh          # 2 回目以降: 反映して再起動
+```
+
+- `config.json` と `data/` はサーバーへ送らないし、消さない。`--setup` のときだけ、サーバーに `config.json` がなければ手元のものを送る
+- unit ファイルは `deploy/mesugaki-bot.service`。ログは `journalctl -u mesugaki-bot -f`
+
 ## コマンド(サーバー管理権限のある人だけ)
 
 | コマンド | 内容 |
